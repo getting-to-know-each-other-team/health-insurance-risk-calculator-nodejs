@@ -11,6 +11,17 @@ const port = process.env.PORT || 3000
 const majorVersion = 1
 const minorVersion = 3
 
+// creates a variable to hold the points for the health insurance
+let healthPoints;
+
+/* This method when called from the static sight should take in the height and weight in 
+pounds and inches respetively. This method should then convert the values to the metric system 
+and then calculate the BMI for the individual and return that value back to the static site.
+*/
+app.get("/calculate-bmi", (request, response) => {
+
+})
+
 // custom 404 page
 app.use((request, response) => {
     response.type('text/plain')
