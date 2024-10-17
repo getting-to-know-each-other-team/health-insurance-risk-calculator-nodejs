@@ -23,6 +23,14 @@ app.get("/calculate-bmi", (request, response) => {
 
 })
 
+/* This method should be called when clicking on the button ot calculate the health insurance risk
+of the user and should be passed all of the values that the user choose as well as the BMI points
+and then adds them all together and sends the data back to the static site in JSON format
+*/
+app.get("/calculate-health-insurnace-risk", (request, response) => {
+
+})
+
 // custom 404 page
 app.use((request, response) => {
     response.type('text/plain')
