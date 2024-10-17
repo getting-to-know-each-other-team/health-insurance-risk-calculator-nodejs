@@ -12,6 +12,12 @@ const port = process.env.PORT || 3000
 const majorVersion = 1
 const minorVersion = 3
 
+//Ping API functionality. Added a response message incase we want to showcase on the website that the Ping API Pogue wanted is working.
+app.get('/ping', (req, res) => {
+    console.log('Received a ping from the client');
+    res.status(200).json({ message: 'Server is awake!' });
+  });
+
 // creates a variable to hold the points for the health insurance
 let healthPoints;
 
@@ -46,7 +52,7 @@ app.use((err, request, response, next) => {
     response.send('500 - Server Error')
 })
 
-app.listen(port, () => console.log(
-    `Expressed Started at \"http:localhost:${port}\"\n`
-    `press Ctrl-C to terminate session.`
-))
+app.listen(port, () => {
+    console.log(`Express Started at "http://localhost:${port}"\n` +
+                `Press Ctrl-C to terminate session.`);
+});
