@@ -1,5 +1,6 @@
 const express = require('express')
 app = express()
+const http = require('http')
 
 const cors = require("cors")
 app.use(cors({origin: '*'}))
@@ -19,6 +20,14 @@ pounds and inches respetively. This method should then convert the values to the
 and then calculate the BMI for the individual and return that value back to the static site.
 */
 app.get("/calculate-bmi", (request, response) => {
+
+})
+
+/* This method should be called when clicking on the button ot calculate the health insurance risk
+of the user and should be passed all of the values that the user choose as well as the BMI points
+and then adds them all together and sends the data back to the static site in JSON format
+*/
+app.get("/calculate-health-insurnace-risk", (request, response) => {
 
 })
 
