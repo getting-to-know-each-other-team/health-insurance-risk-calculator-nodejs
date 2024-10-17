@@ -1,5 +1,16 @@
 {
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.1"
-  }
+  },
+  "name": "health-insurance-risk-calculator-nodejs",
+  "version": "1.0.0",
+  "description": "Authors: Matthew Shouse, Jason Yescas, Joshua Butny, Nikhila Gonuguntla",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
