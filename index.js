@@ -21,6 +21,20 @@ app.get('/ping', (req, res) => {
 // creates a variable to hold the points for the health insurance
 let healthPoints;
 
+function calculateBloodPressure(systolic, diastolic) {
+    if (systolic < 120 && diastolic) {
+        healthPoints += 0
+    } else if ((systolic >= 120 && systolic<= 129) && (diastolic < 80)) {
+        healthPoints += 15
+    } else if ((systolic >= 130 && systolic <= 139) || (diastolic <= 80 && diastolic >= 89)) {
+        healthPoints += 30
+    } else if ((systolic >= 140) || (diastolic >= 90)) {
+        healthPoints += 75
+    } else if (systolic >= 180 || diastolic >= 120) {
+        healthPoints += 100
+    }
+}
+
 /* This method when called from the static sight should take in the height and weight in 
 pounds and inches respetively. This method should then convert the values to the metric system 
 and then calculate the BMI for the individual and return that value back to the static site.
