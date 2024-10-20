@@ -1,6 +1,5 @@
 const express = require('express')
 app = express()
-const http = require('http')
 
 const cors = require("cors")
 app.use(cors({origin: '*'}))
@@ -9,8 +8,10 @@ var url = require('url')
 var dt = require('./date-time')
 
 const port = process.env.PORT || 3000
-const majorVersion = 1
-const minorVersion = 3
+
+app.get('/', (req, res) =>{
+    res.status(200).send('Health Insurance Risk Calculator API - Fat Doinks 2024')
+})
 
 //Ping API functionality. Added a response message incase we want to showcase on the website that the Ping API Pogue wanted is working.
 app.get('/ping', (req, res) => {
@@ -42,9 +43,9 @@ and then calculate the BMI for the individual and return that value back to the 
 app.get("/calculate-bmi", (request, response) => {
     console.log('Calling /calculate-bmi on the Node.js server.')
     var inputs = url.parse(request.url, true).query
-    const heightFeet = parseInt(inputs.feet)
-    const heightInches = parseInt (inputs.inches)
-    const weight = parseInt(inputs.lbs)
+    var heightFeet = parseInt(inputs.feet)
+    var heightInches = parseInt (inputs.inches)
+    var weight = parseInt(inputs.lbs)
 
     // Convert height to total inches
     const totalHeightInches = (heightFeet * 12) + heightInches;
@@ -57,8 +58,8 @@ app.get("/calculate-bmi", (request, response) => {
     console.log('Calculated BMI: ' + bmi.toFixed(2)); // Log the BMI
     
     // Send the result
-    response.type('text/plain');
-    response.send(`Your BMI is: ${bmi.toFixed(2)}`);
+    response.type('application/json');
+    response.json({bmiResult:bmi});
 })
 
 /* This method should be called when clicking on the button ot calculate the health insurance risk
