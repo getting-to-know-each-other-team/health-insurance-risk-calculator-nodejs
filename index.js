@@ -40,7 +40,25 @@ pounds and inches respetively. This method should then convert the values to the
 and then calculate the BMI for the individual and return that value back to the static site.
 */
 app.get("/calculate-bmi", (request, response) => {
+    console.log('Calling /calculate-bmi on the Node.js server.')
+    var inputs = url.parse(request.url, true).query
+    const heightFeet = parseInt(inputs.feet)
+    const heightInches = parseInt (inputs.inches)
+    const weight = parseInt(inputs.lbs)
 
+    // Convert height to total inches
+    const totalHeightInches = (heightFeet * 12) + heightInches;
+
+    // Calculate BMI
+    const bmi = (weight / (totalHeightInches * totalHeightInches)) * 703;
+    
+    console.log('Height: ' + heightFeet + '\'' + heightInches + '\'');
+    console.log('Weight: ' + weight + ' lbs.');
+    console.log('Calculated BMI: ' + bmi.toFixed(2)); // Log the BMI
+    
+    // Send the result
+    response.type('text/plain');
+    response.send(`Your BMI is: ${bmi.toFixed(2)}`);
 })
 
 /* This method should be called when clicking on the button ot calculate the health insurance risk
