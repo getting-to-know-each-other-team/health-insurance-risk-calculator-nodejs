@@ -6,6 +6,7 @@ app.use(cors({origin: '*'}))
 
 var url = require('url')
 var dt = require('./date-time')
+var bmi = 0;
 
 const port = process.env.PORT || 3000
 
@@ -36,6 +37,12 @@ function calculateBloodPressure(systolic, diastolic) {
     }
 }
 
+function bmiPoints() {
+    if (bmi >= 18.5 && bmi <= 24.9) return 0;
+    if (bmi >= 25.0 && bmi <= 29.9) return 30;
+    if (bmi >= 30.0) return 75;
+}
+
 /* This method when called from the static sight should take in the height and weight in 
 pounds and inches respetively. This method should then convert the values to the metric system 
 and then calculate the BMI for the individual and return that value back to the static site.
@@ -51,7 +58,7 @@ app.get("/calculate-bmi", (request, response) => {
     const totalHeightInches = (heightFeet * 12) + heightInches;
 
     // Calculate BMI
-    const bmi = (weight / (totalHeightInches * totalHeightInches)) * 703;
+    bmi = (weight / (totalHeightInches * totalHeightInches)) * 703;
     
     console.log('Height: ' + heightFeet + '\'' + heightInches + '\'');
     console.log('Weight: ' + weight + ' lbs.');
@@ -67,7 +74,12 @@ of the user and should be passed all of the values that the user choose as well 
 and then adds them all together and sends the data back to the static site in JSON format
 */
 app.get("/calculate-health-insurnace-risk", (request, response) => {
-
+    const {systolic, diastolic, age, diabetes, cancer, alzheimers} = request.body
+    var bp = calculateBloodPressure(systolic, diastolic)
+    var bmiPoints = bmiPoints();
+    var healthPoints = (bp + age + diabetes + cancer + alzheimers + bmiPoints)
+    response.type("application/json");
+    response.json({overallPoints:healthPoints})
 })
 
 // custom 404 page
