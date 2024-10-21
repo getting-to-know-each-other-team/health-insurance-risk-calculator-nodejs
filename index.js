@@ -1,8 +1,9 @@
-const express = require('express')
-app = express()
+const express = require('express');
+const app = express();
 
-const cors = require("cors")
-app.use(cors({origin: '*'}))
+const cors = require("cors");
+app.use(cors({origin: '*'}));
+app.use(express.json());
 
 var url = require('url')
 var dt = require('./date-time')
@@ -21,7 +22,7 @@ app.get('/ping', (req, res) => {
   });
 
 // creates a variable to hold the points for the health insurance
-let healthPoints;
+let healthPoints = 0;
 
 function calculateBloodPressure(systolic, diastolic) {
     if (systolic < 120 && diastolic) {
@@ -35,12 +36,14 @@ function calculateBloodPressure(systolic, diastolic) {
     } else if (systolic >= 180 || diastolic >= 120) {
         healthPoints += 100
     }
+    return 0;
 }
 
 function bmiPoints(bmi) {
     if (bmi >= 18.5 && bmi <= 24.9) return 0;
     if (bmi >= 25.0 && bmi <= 29.9) return 30;
     if (bmi >= 30.0) return 75;
+    return 0;
 }
 
 /* This method when called from the static sight should take in the height and weight in 
@@ -74,11 +77,10 @@ of the user and should be passed all of the values that the user choose as well 
 and then adds them all together and sends the data back to the static site in JSON format
 */
 app.post("/calculate-health-insurance-risk", (request, response) => {
-    const {systolic, diastolic, age, diabetes, cancer, alzheimers} = request.body;
-    let healthPoints = 0;
-    calculateBloodPressure(systolic, diastolic);
-    const bmiPoints = bmiPoints(bmi);
-    healthPoints += age + diabetes + cancer + alzheimers + bmiValue;
+    const {systolic, diastolic, age, diabetes, cancer, alzheimers, bmi} = request.body;
+    const bpPoints = calculateBloodPressure(systolic, diastolic);
+    const bmiValue = bmiPoints(bmi);
+    healthPoints += age + diabetes + cancer + alzheimers + bmiValue + bpPoints;
     response.type("application/json");
     response.json({ overallPoints:healthPoints })
 });
