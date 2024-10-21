@@ -39,7 +39,7 @@ function calculateBloodPressure(systolic, diastolic) {
     return 0;
 }
 
-function bmiPoints(bmi) {
+function bmiPoints() {
     if (bmi >= 18.5 && bmi <= 24.9) return 0;
     if (bmi >= 25.0 && bmi <= 29.9) return 30;
     if (bmi >= 30.0) return 75;
@@ -77,9 +77,10 @@ of the user and should be passed all of the values that the user choose as well 
 and then adds them all together and sends the data back to the static site in JSON format
 */
 app.post("/calculate-health-insurance-risk", (request, response) => {
-    const {systolic, diastolic, age, diabetes, cancer, alzheimers, bmi} = request.body;
+    healthPoints = 0;
+    const {systolic, diastolic, age, diabetes, cancer, alzheimers} = request.body;
     const bpPoints = calculateBloodPressure(systolic, diastolic);
-    const bmiValue = bmiPoints(bmi);
+    const bmiValue = bmiPoints()
     healthPoints += age + diabetes + cancer + alzheimers + bmiValue + bpPoints;
     response.type("application/json");
     response.json({ overallPoints:healthPoints })
