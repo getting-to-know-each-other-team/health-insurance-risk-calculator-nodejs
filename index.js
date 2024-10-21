@@ -73,8 +73,14 @@ app.get("/calculate-bmi", (request, response) => {
 of the user and should be passed all of the values that the user choose as well as the BMI points
 and then adds them all together and sends the data back to the static site in JSON format
 */
-app.get("/calculate-health-insurnace-risk", (request, response) => {
+app.post("/calculate-health-insurnace-risk", (request, response) => {
     const {systolic, diastolic, age, diabetes, cancer, alzheimers} = request.body
+    parseInt(systolic)
+    parseInt(diastolic)
+    parseInt(age)
+    parseInt(diabetes)
+    parseInt(cancer)
+    parseInt(alzheimers)
     var bp = calculateBloodPressure(systolic, diastolic)
     var bmiPoints = bmiPoints();
     var healthPoints = (bp + age + diabetes + cancer + alzheimers + bmiPoints)
