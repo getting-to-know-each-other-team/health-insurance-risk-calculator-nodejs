@@ -77,6 +77,7 @@ of the user and should be passed all of the values that the user choose as well 
 and then adds them all together and sends the data back to the static site in JSON format
 */
 app.post("/calculate-health-insurance-risk", (request, response) => {
+    healthPoints = 0;
     const {systolic, diastolic, age, diabetes, cancer, alzheimers} = request.body;
     const bpPoints = calculateBloodPressure(systolic, diastolic);
     const bmiValue = bmiPoints()
